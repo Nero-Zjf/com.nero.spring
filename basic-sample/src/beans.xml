@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="nero" class="pojo.Student">
+        <!--通过bean的setter方法注入依赖-->
+        <property name="name" value="nero"/>
+        <property name="book" ref="book"/>
+    </bean>
+    <bean id="book" class="pojo.Book">
+        <!--通过bean的构造器方法注入依赖-->
+        <constructor-arg name="name" value="水浒"/>
+    </bean>
+</beans>
