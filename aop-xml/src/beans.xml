@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean class="aop.xml.service.DogService"/>
+    <bean class="aop.xml.service.UserService"/>
+    <bean name="logAspectBean" class="aop.xml.aspect.LogAspect"/>
+    <aop:config>
+        <aop:pointcut id="myPointcut" expression="execution(* aop.xml.service.*.*(..))"/>
+        <!--将容器中的logAspectBean转换成切面Bean
+        切面Bean的新名称为: logAspect
+         指定该切面的优先级为2-->
+        <aop:aspect id="logAspect" ref="logAspectBean" order="2">
+            <!--定义一个Before增强处理
+            直接指定切入点表达式
+            以切面Bean中的log ()方法作为增强处理方法-->
+            <aop:before method="log" pointcut="execution(* aop.xml.service.*.*(..)) &amp;&amp; args(name,age)"
+                       arg-names="name,age"/>
+            <!--定又一个AfterReturning增强处理
+            直接指定切入点表达式
+            以切面Bean中的log1()方法作为增强处理方法-->
+            <aop:after-returning method="log1" pointcut-ref="myPointcut" returning="rvt"/>
+            <aop:after-throwing method="doRecoveryActions" pointcut-ref="myPointcut" throwing="ex"/>
+            <aop:after method="release" pointcut-ref="myPointcut"/>
+            <aop:around method="processTx" pointcut-ref="myPointcut"/>
+        </aop:aspect>
+    </aop:config>
+</beans>

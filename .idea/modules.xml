@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/aop-annotation/aop-annotation.iml" filepath="$PROJECT_DIR$/aop-annotation/aop-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aop-xml/aop-xml.iml" filepath="$PROJECT_DIR$/aop-xml/aop-xml.iml" />
       <module fileurl="file://$PROJECT_DIR$/basic-sample/basic-sample.iml" filepath="$PROJECT_DIR$/basic-sample/basic-sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/com.nero.spring.iml" filepath="$PROJECT_DIR$/com.nero.spring.iml" />
       <module fileurl="file://$PROJECT_DIR$/create-container/create-container.iml" filepath="$PROJECT_DIR$/create-container/create-container.iml" />
+      <module fileurl="file://$PROJECT_DIR$/resource/resource.iml" filepath="$PROJECT_DIR$/resource/resource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-cache/spring-cache.iml" filepath="$PROJECT_DIR$/spring-cache/spring-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/transaction-annotation/transaction-annotation.iml" filepath="$PROJECT_DIR$/transaction-annotation/transaction-annotation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/transaction-program/transaction-program.iml" filepath="$PROJECT_DIR$/transaction-program/transaction-program.iml" />
+      <module fileurl="file://$PROJECT_DIR$/transaction-xml/transaction-xml.iml" filepath="$PROJECT_DIR$/transaction-xml/transaction-xml.iml" />
     </modules>
   </component>
 </project>
