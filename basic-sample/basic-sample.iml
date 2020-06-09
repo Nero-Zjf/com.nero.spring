@@ -17,6 +17,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Spring" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../lib/spring" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../lib/spring" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../lib/spring" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../lib/spring" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -21,6 +21,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
           p:minPoolSize="5"
           p:initialPoolSize="5"
           p:maxIdleTime="30"/>
+
     <!--配置PlatformTransactionManager-->
     <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           p:dataSource-ref="dataSource"/>

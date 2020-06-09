@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!--开启自动扫描-->
+    <!--<context:component-scan base-package="service"/>-->
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties"/>
+    </bean>
+    <bean class="transaction.xml.jta.Service.UserServiceIml" p:template-ref="jdbcTemplate"
+          p:template1-ref="jdbcTemplate1"/>
+
+    <!-- XA方式 -->
+    <!-- MYSQL数据库配置 0 -->
+    <bean id="mysqlDataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
+          destroy-method="close">
+        <!--给数据源取唯一区分的名称-->
+        <property name="uniqueResourceName" value="dataSource"/>
+        <!--使用 mysql jdbc 提供的XAResource-->
+        <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <!--使用阿里 druid数据源提供的XAResource-->
+        <!--<property name="xaDataSourceClassName" value="com.alibaba.druid.pool.xa.DruidXADataSource"/>-->
+        <!--配置对应XAResource的数据库连接属性-->
+        <property name="xaProperties">
+            <!--MysqlXADataSource 属性配置-->
+            <props>
+                <prop key="URL">${dataSource1.url}</prop>
+                <prop key="user">${dataSource1.user}</prop>
+                <prop key="password">${dataSource1.password}</prop>
+            </props>
+
+            <!--DruidXADataSource配置-->
+            <!--<props>-->
+            <!--    <prop key="url">${dataSource1.url}</prop>-->
+            <!--    <prop key="username">${dataSource1.user}</prop>-->
+            <!--    <prop key="password">${dataSource1.password}</prop>-->
+            <!--</props>-->
+        </property>
+        <property name="minPoolSize" value="10"/>
+        <property name="maxPoolSize" value="100"/>
+        <property name="borrowConnectionTimeout" value="30"/>
+        <property name="maintenanceInterval" value="60"/>
+    </bean>
+
+    <!-- MYSQL数据库配置 1-->
+    <bean id="mysqlDataSource1" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
+          destroy-method="close">
+        <property name="uniqueResourceName" value="dataSource1"/>
+        <!--使用 mysql jdbc 提供的XAResource-->
+        <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <!--使用阿里 druid数据源提供的XAResource-->
+        <!--<property name="xaDataSourceClassName" value="com.alibaba.druid.pool.xa.DruidXADataSource"/>-->
+        <!--配置对应XAResource的数据库连接属性-->
+        <property name="xaProperties">
+            <!--MysqlXADataSource 属性配置-->
+            <props>
+                <prop key="URL">${dataSource2.url}</prop>
+                <prop key="user">${dataSource2.user}</prop>
+                <prop key="password">${dataSource2.password}</prop>
+            </props>
+
+            <!--DruidXADataSource配置-->
+            <!--<props>-->
+            <!--    <prop key="url">${dataSource2.url}</prop>-->
+            <!--    <prop key="username">${dataSource2.user}</prop>-->
+            <!--    <prop key="password">${dataSource2.password}</prop>-->
+            <!--</props>-->
+        </property>
+        <property name="minPoolSize" value="10"/>
+        <property name="maxPoolSize" value="100"/>
+        <property name="borrowConnectionTimeout" value="30"/>
+        <property name="maintenanceInterval" value="60"/>
+    </bean>
+
+    <!-- 分布式事务 -->
+    <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager" init-method="init"
+          destroy-method="close">
+        <property name="forceShutdown" value="true"/>
+    </bean>
+    <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+        <!--事务超时时间-->
+        <property name="transactionTimeout" value="300"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+        <property name="transactionManager" ref="atomikosTransactionManager"/>
+        <property name="userTransaction" ref="atomikosUserTransaction"/>
+    </bean>
+
+    <!--配置PlatformTransactionManager-->
+    <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" p:dataSource-ref="mysqlDataSource"/>
+    <bean name="jdbcTemplate1" class="org.springframework.jdbc.core.JdbcTemplate" p:dataSource-ref="mysqlDataSource1"/>
+    <!--配置事务增强处理Bean，指定事务管理器-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!--用于配置详细的事务定义-->
+        <tx:attributes>
+            <!--所有以get开头的方法是只读的-->
+            <tx:method name="get*" read-only="true"/>
+            <!--其他方法使用默认的事务设置，指定超时时长为5秒-->
+            <tx:method name="*" isolation="DEFAULT" propagation="REQUIRED" timeout="5"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- AOP配置的元素-->
+    <aop:config>
+        <aop:pointcut id="myPointcut" expression="execution(* transaction.xml.jta.Service.*Iml.*(..))"/>
+        <!--指定在myPointcut切入点应用txAdvice事务增强处理-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut"/>
+    </aop:config>
+</beans>

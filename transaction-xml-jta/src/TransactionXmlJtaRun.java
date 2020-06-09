@@ -1,11 +1,11 @@
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import transaction.xml.Service.UserService;
-import transaction.xml.pojo.User;
+import transaction.xml.jta.Service.UserService;
+import transaction.xml.jta.pojo.User;
 
 import java.sql.SQLException;
 
-public class TransactionXmlRun {
+public class TransactionXmlJtaRun {
     public static void main(String[] args) throws SQLException {
         try {
             ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");

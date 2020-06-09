@@ -9,9 +9,11 @@
       <module fileurl="file://$PROJECT_DIR$/create-container/create-container.iml" filepath="$PROJECT_DIR$/create-container/create-container.iml" />
       <module fileurl="file://$PROJECT_DIR$/resource/resource.iml" filepath="$PROJECT_DIR$/resource/resource.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-cache/spring-cache.iml" filepath="$PROJECT_DIR$/spring-cache/spring-cache.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
       <module fileurl="file://$PROJECT_DIR$/transaction-annotation/transaction-annotation.iml" filepath="$PROJECT_DIR$/transaction-annotation/transaction-annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/transaction-program/transaction-program.iml" filepath="$PROJECT_DIR$/transaction-program/transaction-program.iml" />
       <module fileurl="file://$PROJECT_DIR$/transaction-xml/transaction-xml.iml" filepath="$PROJECT_DIR$/transaction-xml/transaction-xml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/transaction-xml-jta/transaction-xml-jta.iml" filepath="$PROJECT_DIR$/transaction-xml-jta/transaction-xml-jta.iml" />
     </modules>
   </component>
 </project>
