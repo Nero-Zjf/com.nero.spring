@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:nero="http://com.nero.spring/nerocustom"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://com.nero.spring/nerocustom http://com.nero.spring/nerocustom.xsd">
+    <nero:student id="customnero" name="custom" book="book"/>
+    <alias name="book" alias="book3"/>
     <bean id="nero" class="pojo.Student">
+        <constructor-arg name="name" value="nero"/>
+        <!--<constructor-arg name="name" value="nero">-->
+        <!--    <description>dsd</description>-->
+        <!--</constructor-arg>-->
+        <!--<replaced-method name="getName" replacer="replaceGetName"/>-->
         <!--通过bean的setter方法注入依赖-->
         <property name="name" value="nero"/>
-        <property name="book" ref="book"/>
+        <property name="birth" value="1992-12-18"/>
+        <!--<property name="book" ref="book"/>-->
+        <!--<property name="book" ref="book">-->
+        <!--</property>-->
+        <!--<meta key="bserver" value="nero"/>-->
     </bean>
+    <bean id="bookByFactory" class="pojo.BookFactoryBean"/>
+    <bean id="replaceGetName" class="pojo.ReplaceGetName"/>
     <bean id="book" class="pojo.Book">
         <!--通过bean的构造器方法注入依赖-->
         <constructor-arg name="name" value="水浒"/>
+        <property name="owner" ref="nero"/>
     </bean>
+    <bean id="book2" class="pojo.Book">
+        <!--通过bean的构造器方法注入依赖-->
+        <constructor-arg name="name" value="book2"/>
+    </bean>
+    <!--<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">-->
+    <!--    <property name="customEditors">-->
+    <!--        <map>-->
+    <!--            <entry key="java.util.Date" value="propeditor.DatePropertyEditor"/>-->
+    <!--        </map>-->
+    <!--    </property>-->
+    <!--</bean>-->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <array>
+                <bean class="propeditor.DatePropertyEditorRegistrar"/>
+            </array>
+        </property>
+    </bean>
+    <bean class="event.TestEventListener"/>
 </beans>
