@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context.xsd">
     <context:component-scan base-package="test"/>
@@ -22,4 +22,17 @@
     <!--        </set>-->
     <!--    </property>-->
     <!--</bean>-->
+
+    <!--<bean id="annotationTest" name="annotationTest" class="test.autowire.ValueAnnotationTest">-->
+    <!--    <property name="osName" value="#{T{java.lang.Math}.random()"/>-->
+    <!--</bean>-->
+    <bean name="parentAnnotationTest" class="test.autowire.ValueAnnotationTest"/>
+    <bean name="annotationTest" class="test.autowire.ValueAnnotationTest" parent="parentAnnotationTest"/>
+    <bean name="anotherBean" class="test.autowire.AnotherBean">
+        <property name="name" value="nero">
+            <meta key="test" value="test"/>
+        </property>
+    </bean>
+
+    <bean name="userService" class="test.factory.UserServiceFactory" factory-method="getUserService"/>
 </beans>
