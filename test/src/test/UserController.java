@@ -13,6 +13,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    public UserController() {
+        System.out.println("test");
+    }
+
     public User getUser() {
         return userService.getUser();
     }

@@ -5,8 +5,7 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
-import pojo.Book;
-import pojo.Student;
+import pojo.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +19,11 @@ public class Main {
         //获取指定名称的bean
         //        Student student = (Student) applicationContext.getBean("nero");
         Student student = applicationContext.getBean("nero", Student.class);
-        student.readBook();
+        //student.readBook();
+
+        System.out.println(applicationContext.getBean(TestA.class));
+        System.out.println(applicationContext.getBean(TestB.class));
+        System.out.println(applicationContext.getBean(TestC.class));
 
         XmlBeanDefinitionReader xmlBeanDefinitionReader = new XmlBeanDefinitionReader(new DefaultListableBeanFactory());
         xmlBeanDefinitionReader.loadBeanDefinitions(new ClassPathResource("beans.xml"));

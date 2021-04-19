@@ -3,6 +3,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import test.UserController;
 import test.autowire.AnotherBean;
 import test.autowire.ValueAnnotationTest;
+import test.circle.BeanA;
 import test.pojo.User;
 import test.service.UserService;
 
@@ -19,8 +20,11 @@ public class Test {
         ValueAnnotationTest parentAnnotationTest = (ValueAnnotationTest) applicationContext.getBean("parentAnnotationTest");
         AnotherBean anotherBean = (AnotherBean) applicationContext.getBean("anotherBean");
         UserService userService = (UserService) applicationContext.getBean("userService");
+        BeanA beanA = applicationContext.getBean(BeanA.class);
+        System.out.println(beanA);
         System.out.println(valueAnnotationTest);
         System.out.println(uc.getUser());
         System.out.println(applicationContext.getBean(User.class));
+//        applicationContext.close();
     }
 }

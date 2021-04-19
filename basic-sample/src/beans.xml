@@ -2,12 +2,18 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:nero="http://com.nero.spring/nerocustom"
        xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-http://com.nero.spring/nerocustom http://com.nero.spring/nerocustom.xsd">
+http://com.nero.spring/nerocustom http://com.nero.spring/nerocustom.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <context:component-scan base-package="*"/>
     <nero:student id="customnero" name="custom" book="book"/>
+    <bean class="pojo.TestConfig" name="testConfig"/>
     <alias name="book" alias="book3"/>
     <bean id="nero" class="pojo.Student">
-        <constructor-arg name="name" value="nero"/>
+        <!--<constructor-arg name="name" value="nero"/>-->
+        <constructor-arg name="name">
+            <null/>
+        </constructor-arg>
         <!--<constructor-arg name="name" value="nero">-->
         <!--    <description>dsd</description>-->
         <!--</constructor-arg>-->

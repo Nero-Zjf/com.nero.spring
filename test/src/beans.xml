@@ -35,4 +35,7 @@
     </bean>
 
     <bean name="userService" class="test.factory.UserServiceFactory" factory-method="getUserService"/>
+    <bean name="beanA" class="test.circle.BeanA"/>
+    <bean name="beanB" class="test.circle.BeanB" destroy-method="getName"/>
+    <!--<bean class="test.circle.CircleTestBeanPostProcessor"/>-->
 </beans>

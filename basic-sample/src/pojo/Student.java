@@ -1,5 +1,8 @@
 package pojo;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
 import java.util.Date;
 
 public class Student implements Cloneable {
